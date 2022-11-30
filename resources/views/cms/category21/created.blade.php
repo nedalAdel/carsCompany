@@ -39,14 +39,21 @@
           
       
 
-      <form method="POST" action="{{route('Cars.store')}}">
+      <form method="POST" action="{{route('category.store')}}">
         @csrf
         <div class="card-body">
           <div class="form-group">
             <label for="name">name</label>
             <input type="text" class="form-control" name="name"value="{{old('name')}}" id="name" placeholder="Enter name">
           </div>
+          <div class="form-group">
+            <label for="name">descrpion</label>
+            <input type="text" class="form-control" name="descrpion"value="{{old('descrpion')}}" id="name" placeholder="Enter descrpion">
+          </div>
         </div>
+
+      
+
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>

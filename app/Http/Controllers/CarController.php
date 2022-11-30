@@ -47,7 +47,10 @@ class CarController extends Controller
         $Car=new Car();
         $Car->name= $request->name;
         $saved = $Car->save();
-        return redirect()->back();  
+          
+        session()->flash('alert-type',$saved ? 'succses' : 'danger');
+        session()->flash('message',$saved ? "create successfully" : "create failed!");
+        return redirect()->back();
     //    dd($request->all());
     }
 
@@ -57,9 +60,9 @@ class CarController extends Controller
      * @param  \App\Models\car  $car
      * @return \Illuminate\Http\Response
      */
-    public function show(car $car)
+    public function show($id)
     {
-        //
+        return response()->view('cms.Edit.edit', ['car'=>Car::find($id)]);
     }
 
     /**
@@ -68,9 +71,10 @@ class CarController extends Controller
      * @param  \App\Models\car  $car
      * @return \Illuminate\Http\Response
      */
-    public function edit(car $car)
+    public function edit($id)
     {
         //
+        return response()->view('cms.Edit.edit', ['car'=>Car::find($id)]);
     }
 
     /**
@@ -80,9 +84,21 @@ class CarController extends Controller
      * @param  \App\Models\car  $car
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, car $car)
+    public function update(Request $request, $id)
     {
         //
+        // dd($request->all());
+        $request->validate([
+            'name'=>'required|string|min:3|max:45'
+        ]);
+        
+        $car = Car::find($id);
+        $car->name= $request->name;
+        $update = $car->save();
+          
+        session()->flash('alert-type',$update ? 'succses' : 'danger');
+        session()->flash('message',$update ? " update successfully" : "update failed!");
+        return redirect()->back();
     }
 
     /**
@@ -91,8 +107,12 @@ class CarController extends Controller
      * @param  \App\Models\car  $car
      * @return \Illuminate\Http\Response
      */
-    public function destroy(car $car)
+    public function destroy($id)
     {
         //
+         Car::where('id', $id)->delete();
+
+         return redirect()->back();
+
     }
 }

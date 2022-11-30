@@ -47,11 +47,29 @@
                 <td>{{$Car->name}}</td>
                 <td>{{$Car->created_at}}</td>
                 <td>{{$Car->updated_at}}</td>
-                <td>-</td>
+                <td>
+                  <div class="btn-group">
+                    <a href="{{route('Cars.edit',$Car->id)}}"class="btn btn-info">
+                    <i class="fas fa-edit"></i>
+                    </a>
+
+              <form method="POST" action="{{route('Cars.destroy',$Car->id)}}">
+                @csrf
+                @method('DELETE')
+
+                <button type="submit" class="btn btn-danger">
+                  <i class="fas fa-trash"></i>
+                  </button>
+             
+              </form>
+                    </div>
+                    </td>
               </tr>
               @endforeach
             
+              
             </tbody>
+
           </table>
         </div>
 
@@ -65,3 +83,4 @@
 
 @endsection
 @section('script')
+@endsection
